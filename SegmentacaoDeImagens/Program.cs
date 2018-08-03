@@ -33,25 +33,24 @@ namespace SegmentacaoDeImagens
 
                 UMat uimage = new UMat();
                 CvtColor(img, uimage, ColorConversion.Bgr2Gray);
-                double minDist = 30;
-                double cannyThreshold = 100;
-                double circleAccumulatorThreshold = 100;
+                var minDist = 30;
+                var minRadius = 35;
+                var cannyThreshold = 100;
+                var circleAccumulatorThreshold = 100;
 
-                IEnumerable<CircleF> circles =
-                    HoughCircles(uimage, HoughType.Gradient, 2.0, minDist, cannyThreshold, circleAccumulatorThreshold, minRadius: 30, maxRadius: 100)
-                    .Where(c => !OverflowsImage(c, img));
+                IEnumerable<CircleF> circles;
 
-                if (!circles.Any())
+                do
                 {
-                    circleAccumulatorThreshold = 75;
                     circles =
-                        HoughCircles(uimage, HoughType.Gradient, 2.0, minDist, cannyThreshold, circleAccumulatorThreshold, minRadius: 30, maxRadius: 100)
+                        HoughCircles(uimage, HoughType.Gradient, 2.0, minDist, cannyThreshold, circleAccumulatorThreshold, minRadius, maxRadius: 100)
                         .Where(c => !OverflowsImage(c, img));
-                }
+                    circleAccumulatorThreshold -= 20;
+                } while (!circles.Any());
 
                 circles = circles.OrderByDescending(c => c.Radius).Take(2);
 
-                if (Math.Abs(circles.First().Radius - circles.Last().Radius) > 5)
+                if (Math.Abs(circles.FirstOrDefault().Radius - circles.LastOrDefault().Radius) > 5)
                 {
                     circles = circles.Take(1);
                 }
