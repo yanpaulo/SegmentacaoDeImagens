@@ -20,6 +20,48 @@ namespace SegmentacaoDeImagens
         {
         }
 
+        private static void KMedias(string filename = @"C:\Users\yanpa\source\repos\SegmentacaoDeImagens\SegmentacaoDeImagens\bin\Debug\images\3026_lg.jpg")
+        {
+            var img = new Image<Bgr, byte>(filename);
+            var data = img.Data;
+            var input = new Matrix<float>(img.Width * img.Height, 1, 3);
+            var output = new Matrix<int>(img.Rows * img.Cols, 1);
+
+            for (int i = 0; i < img.Height; i++)
+            {
+                for (int j = 0; j < img.Width; j++)
+                {
+                    input.Data[i * img.Cols + j, 0] = data[i, j, 0];
+                    input.Data[i * img.Cols + j, 1] = data[i, j, 1];
+                    input.Data[i * img.Cols + j, 2] = data[i, j, 2];
+                }
+            }
+
+            var term = new MCvTermCriteria(1000, 0.001);
+            term.Type = TermCritType.Iter | TermCritType.Eps;
+
+            Kmeans(input, 2, output, term, 5, KMeansInitType.PPCenters, null);
+
+            var @out = new Image<Bgr, byte>(img.Width, img.Height);
+            var outColors = new[]
+            {
+                new Bgr(Color.Black),
+                new Bgr(Color.Red),
+            };
+
+            for (int i = 0; i < img.Rows; i++)
+            {
+                for (int j = 0; j < img.Cols; j++)
+                {
+                    var point = new PointF(i, j);
+                    var circle = new CircleF(point, 1);
+                    @out.Draw(circle, outColors[output[i * img.Cols + j, 0]]);
+                }
+            }
+
+            @out.Save("abcd.jpg");
+        }
+
         private static void Crescimento(string filename = @"C:\Users\yanpa\source\repos\SegmentacaoDeImagens\SegmentacaoDeImagens\bin\Debug\images\3026_lg.jpg")
         {
             const int Limiar = 15;
