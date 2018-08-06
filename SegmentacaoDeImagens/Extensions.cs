@@ -30,5 +30,19 @@ namespace SegmentacaoDeImagens
                 yield return new Point(point.X, point.Y + 1);
             }
         }
+
+        public static string GetStringOrDefault(this Dictionary<string, string> dict, string key, string defaultValue) =>
+            dict.TryGetValue(key, out string value) ? value : defaultValue;
+
+        public static int GetIntOrDefault(this Dictionary<string, string> dict, string key, int defaultValue) =>
+            dict.TryGetValue(key, out string value) ? 
+                int.TryParse(value, out int result) ? result : throw new ArgumentException()
+            : defaultValue;
+
+        public static double GetDoubleOrDefault(this Dictionary<string, string> dict, string key, double defaultValue) =>
+            dict.TryGetValue(key, out string value) ?
+                double.TryParse(value, out double result) ? result : throw new ArgumentException()
+            : defaultValue;
+        
     }
 }
