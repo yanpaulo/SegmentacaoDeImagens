@@ -59,7 +59,7 @@ namespace SegmentacaoDeImagens
                 var img = new Imagem(filename);
                 var output = algoritmo.Executa(img);
 
-                img.Save(Path.Combine(outPath, filename));
+                img.Save(Path.Combine(outPath, Path.GetFileName(filename)));
                 output.Save(Path.Combine(outPath, $"{Path.GetFileNameWithoutExtension(filename)}-{algoritmo.Sufixo}{Path.GetExtension(filename)}"));
             }
 
@@ -98,20 +98,21 @@ namespace SegmentacaoDeImagens
 
             while (n < args.Length)
             {
-                var arg = args[n++];
+                var arg = args[n];
                 if (arg.StartsWith("-"))
                 {
                     arg = arg.Remove(0, 1);
-                    dict[arg] = args[n++];
+                    dict[arg] = args[++n];
                 }
                 else if (!dict.ContainsKey("path"))
                 {
-                    dict.Add("path", args[n++]);
+                    dict.Add("path", arg);
                 }
                 else
                 {
                     throw new ArgumentException();
                 }
+                ++n;
             }
 
             return dict;
