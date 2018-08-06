@@ -25,7 +25,7 @@ namespace SegmentacaoDeImagens
 
         public string Sufixo => "kmedias";
 
-        public Imagem Executa(Imagem img)
+        public ResultadoAlgoritmo Executa(Imagem img)
         {
             var data = img.Data;
 
@@ -64,7 +64,15 @@ namespace SegmentacaoDeImagens
                 }
             }
 
-            return saida;
+            var corCentro = saida[saida.Rows / 2, saida.Cols / 2];
+            var pixels = saida.GetPixels().Where(p => saida[p].Equals(corCentro)).ToList();
+
+            return new ResultadoAlgoritmo
+            {
+                Imagem = saida,
+                Area = pixels.Count,
+                Perimetro = pixels.Count(p => saida.Vizinhos(p).Count(v => saida[v].Equals(corCentro)) < 4)
+            };
         }
     }
 }

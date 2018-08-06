@@ -20,7 +20,7 @@ namespace SegmentacaoDeImagens
 
         public string Sufixo => "cresc";
 
-        public Imagem Executa(Imagem entrada)
+        public ResultadoAlgoritmo Executa(Imagem entrada)
         {
             var gray = entrada.Convert<Gray, byte>();
 
@@ -67,7 +67,15 @@ namespace SegmentacaoDeImagens
             }
 
             var saida = new Imagem(map);
-            return saida;
+            var corArea = Canal == 2 ? new Bgr(0, 0, 255) : throw new InvalidOperationException();
+            var pixels = saida.GetPixels().Where(p => saida[p].Equals(corArea)).ToList();
+            
+            return new ResultadoAlgoritmo
+            {
+                Imagem = saida,
+                Area = pixels.Count,
+                Perimetro = pixels.Count(p => saida.Vizinhos(p).Count(v => saida[v].Equals(corArea)) < 4)
+            };
         }
     }
 }

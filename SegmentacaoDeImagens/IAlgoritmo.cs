@@ -4,6 +4,6 @@
     {
         string Sufixo { get; }
 
-        Imagem Executa(Imagem entrada);
+        ResultadoAlgoritmo Executa(Imagem entrada);
     }
 }

@@ -57,10 +57,15 @@ namespace SegmentacaoDeImagens
             foreach (var filename in pathList)
             {
                 var img = new Imagem(filename);
-                var output = algoritmo.Executa(img);
+                var resultado = algoritmo.Executa(img);
 
                 img.Save(Path.Combine(outPath, Path.GetFileName(filename)));
-                output.Save(Path.Combine(outPath, $"{Path.GetFileNameWithoutExtension(filename)}-{algoritmo.Sufixo}{Path.GetExtension(filename)}"));
+
+                resultado.Imagem.Save(Path.Combine(outPath, $"{Path.GetFileNameWithoutExtension(filename)}-{algoritmo.Sufixo}{Path.GetExtension(filename)}"));
+                File.WriteAllText(
+                    Path.Combine(outPath, $"{Path.GetFileNameWithoutExtension(filename)}-{algoritmo.Sufixo}.txt"),
+                    $"Area: {resultado.Area}, Perímetro: {resultado.Perimetro}"
+                    );
             }
 
         }

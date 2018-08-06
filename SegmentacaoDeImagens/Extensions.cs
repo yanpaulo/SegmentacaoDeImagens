@@ -31,6 +31,18 @@ namespace SegmentacaoDeImagens
             }
         }
 
+        public static IEnumerable<Point> GetPixels(this Imagem img)
+        {
+            var data = img.Data;
+            for (int i = 0; i < img.Rows; i++)
+            {
+                for (int j = 0; j < img.Cols; j++)
+                {
+                    yield return new Point(i, j);
+                }
+            }
+        }
+
         public static string GetStringOrDefault(this Dictionary<string, string> dict, string key, string defaultValue) =>
             dict.TryGetValue(key, out string value) ? value : defaultValue;
 

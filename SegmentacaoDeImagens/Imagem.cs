@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace SegmentacaoDeImagens
 {
-    class Imagem : Image<Bgr, byte>
+    public class Imagem : Image<Bgr, byte>
     {
         public Imagem(string filename) : base(filename) { }
 

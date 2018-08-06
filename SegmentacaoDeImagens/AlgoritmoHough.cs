@@ -24,7 +24,7 @@ namespace SegmentacaoDeImagens
 
         public string Sufixo => "hough";
 
-        public Imagem Executa(Imagem entrada)
+        public ResultadoAlgoritmo Executa(Imagem entrada)
         {
             var img = entrada.Convert<Gray, byte>();
             
@@ -51,7 +51,12 @@ namespace SegmentacaoDeImagens
                 saida.Draw(centro, new Bgr(Color.Red));
             }
 
-            return saida;
+            return new ResultadoAlgoritmo
+            {
+                Imagem = saida,
+                Area = circulos.Sum(c => c.Area),
+                Perimetro = circulos.Sum(c => 2 * Math.PI * c.Radius)
+            };
         }
     }
 }
