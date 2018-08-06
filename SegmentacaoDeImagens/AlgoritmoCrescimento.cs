@@ -31,7 +31,7 @@ namespace SegmentacaoDeImagens
                     new Point(centro.X - size.Width * PorcentagemInicial / 2 / 100, centro.Y - size.Height * PorcentagemInicial / 2 / 100),
                     new Size(size.Width * PorcentagemInicial / 100, size.Height * PorcentagemInicial / 100));
 
-            var map = new byte[size.Width, size.Height, 3];
+            var map = new byte[entrada.Rows, entrada.Cols, 3];
             var queue = new Queue<Point>();
 
             for (int i = seed.Left; i <= seed.Right; i++)

@@ -88,7 +88,7 @@ namespace SegmentacaoDeImagens
                 RaioMinimo = dict.GetIntOrDefault("n", 35),
                 RaioMaximo = dict.GetIntOrDefault("m", 100),
                 LimiarCanny = dict.GetIntOrDefault("c", 100),
-                LimiarAcumuladorCirculo = dict.GetIntOrDefault("a", 100),
+                LimiarAcumuladorCirculo = dict.GetIntOrDefault("u", 100),
             };
 
         private static Dictionary<string, string> LeParametros(string[] args)

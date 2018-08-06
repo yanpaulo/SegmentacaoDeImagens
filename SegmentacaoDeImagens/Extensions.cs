@@ -17,7 +17,7 @@ namespace SegmentacaoDeImagens
             {
                 yield return new Point(point.X - 1, point.Y);
             }
-            if (point.X < img.Size.Width - 1)
+            if (point.X < img.Rows - 1)
             {
                 yield return new Point(point.X + 1, point.Y);
             }
@@ -25,7 +25,7 @@ namespace SegmentacaoDeImagens
             {
                 yield return new Point(point.X, point.Y - 1);
             }
-            if (point.Y < img.Size.Height - 1)
+            if (point.Y < img.Cols - 1)
             {
                 yield return new Point(point.X, point.Y + 1);
             }
