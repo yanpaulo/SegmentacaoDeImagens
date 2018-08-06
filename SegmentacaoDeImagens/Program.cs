@@ -18,6 +18,26 @@ namespace SegmentacaoDeImagens
     {
         static void Main(string[] args)
         {
+            try
+            {
+                ExecutaAlgoritmo(args);
+            }
+            catch (ArgumentException)
+            {
+                MostraAjuda();
+            }
+            catch (KeyNotFoundException)
+            {
+                Console.WriteLine("Caminho do arquivo nao foi especificado.");
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private static void ExecutaAlgoritmo(string[] args)
+        {
             var dict = LeParametros(args);
 
             IAlgoritmo algoritmo;
@@ -67,7 +87,6 @@ namespace SegmentacaoDeImagens
                     $"Area: {resultado.Area}, Perímetro: {resultado.Perimetro}"
                     );
             }
-
         }
 
         private static IAlgoritmo CriaAlgoritmoCrescimento(Dictionary<string, string> dict) =>
@@ -121,6 +140,11 @@ namespace SegmentacaoDeImagens
             }
 
             return dict;
+        }
+
+        static void MostraAjuda()
+        {
+            Console.WriteLine("Consulte o codigo (linhas 89 a 113) para verificar as opcoes validas.");
         }
     }
 }
