@@ -2,8 +2,8 @@
 {
     interface IAlgoritmo
     {
-        Imagem Entrada { get; set; }
+        string Sufixo { get; }
 
-        Imagem Executa();
+        Imagem Executa(Imagem entrada);
     }
 }

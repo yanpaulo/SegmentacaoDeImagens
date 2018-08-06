@@ -20,14 +20,13 @@ namespace SegmentacaoDeImagens
 
         public int Tentativas { get; set; } = 5;
 
-        public KMeansInitType KMeansInitType { get; set; } = KMeansInitType.PPCenters; 
+        public KMeansInitType KMeansInitType { get; set; } = KMeansInitType.PPCenters;
         #endregion
 
-        public Imagem Entrada { get; set; }
+        public string Sufixo => "kmedias";
 
-        public Imagem Executa()
+        public Imagem Executa(Imagem img)
         {
-            var img = Entrada;
             var data = img.Data;
 
             var input = new Matrix<float>(img.Width * img.Height, 1, 3);

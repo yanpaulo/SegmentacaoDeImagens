@@ -15,18 +15,18 @@ namespace SegmentacaoDeImagens
 
         public int RaioMinimo { get; set; } = 35;
 
+        public int RaioMaximo { get; set; } = 100; 
+
         public int LimiarCanny { get; set; } = 100;
 
         public int LimiarAcumuladorCirculo { get; set; } = 100;
-
-        public int RaioMaximo { get; set; } = 100; 
         #endregion
 
-        public Imagem Entrada { get; set; }
+        public string Sufixo => "hough";
 
-        public Imagem Executa()
+        public Imagem Executa(Imagem entrada)
         {
-            var img = Entrada.Convert<Gray, byte>();
+            var img = entrada.Convert<Gray, byte>();
             
 
             var circulos =
@@ -41,7 +41,7 @@ namespace SegmentacaoDeImagens
                 circulos = circulos.Take(1);
             }
 
-            var saida = new Imagem(Entrada.Data);
+            var saida = new Imagem(entrada.Data);
 
             foreach (var c in circulos)
             {

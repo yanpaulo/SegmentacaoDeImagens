@@ -12,18 +12,19 @@ namespace SegmentacaoDeImagens
     {
         private const int Canal = 2;
 
-
-        public Imagem Entrada { get; set; }
-
+        #region Parametros
         public int PorcentagemInicial { get; set; } = 10;
 
         public int Limiar { get; set; } = 15;
+        #endregion
 
-        public Imagem Executa()
+        public string Sufixo => "cresc";
+
+        public Imagem Executa(Imagem entrada)
         {
-            var gray = Entrada.Convert<Gray, byte>();
+            var gray = entrada.Convert<Gray, byte>();
 
-            var size = Entrada.Size;
+            var size = entrada.Size;
             var centro = new Point(size.Width / 2, size.Height / 2);
 
             var seed = new Rectangle(
@@ -47,7 +48,7 @@ namespace SegmentacaoDeImagens
             while (queue.Any())
             {
                 var proximo = queue.Dequeue();
-                var vizinhos = Entrada.Vizinhos(proximo);
+                var vizinhos = entrada.Vizinhos(proximo);
 
                 var pixel = data[proximo.X, proximo.Y, 0];
 
