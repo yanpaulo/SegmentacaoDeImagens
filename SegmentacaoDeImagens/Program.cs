@@ -74,11 +74,15 @@ namespace SegmentacaoDeImagens
             }
 
             var outPath = dict.GetStringOrDefault("o", "output");
+            var resultados = new List<ResultadoAlgoritmo>();
+            Directory.CreateDirectory(outPath);
+
             foreach (var filename in pathList)
             {
                 var img = new Imagem(filename);
                 var resultado = algoritmo.Executa(img);
 
+                resultados.Add(resultado);
                 img.Save(Path.Combine(outPath, Path.GetFileName(filename)));
 
                 resultado.Imagem.Save(Path.Combine(outPath, $"{Path.GetFileNameWithoutExtension(filename)}-{algoritmo.Sufixo}{Path.GetExtension(filename)}"));
@@ -87,6 +91,11 @@ namespace SegmentacaoDeImagens
                     $"Area: {resultado.Area}, Perímetro: {resultado.Perimetro}"
                     );
             }
+
+            Console.WriteLine(
+                $"Área: {resultados.Average(r => r.Area)}\n" +
+                $"Perímetro: {resultados.Average(r => r.Perimetro)}\n" +
+                $"Razão Área/Perímetro: {resultados.Average(r => r.Area) / resultados.Average(r => r.Perimetro)}");
         }
 
         private static IAlgoritmo CriaAlgoritmoCrescimento(Dictionary<string, string> dict) =>
