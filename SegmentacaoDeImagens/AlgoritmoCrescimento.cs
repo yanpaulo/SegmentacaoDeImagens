@@ -38,7 +38,7 @@ namespace SegmentacaoDeImagens
             {
                 for (int j = seed.Top; j <= seed.Bottom; j++)
                 {
-                    map[i, j, Canal] = 255;
+                    map[j, i, Canal] = 255;
                     queue.Enqueue(new Point(i, j));
                 }
             }
@@ -50,17 +50,17 @@ namespace SegmentacaoDeImagens
                 var proximo = queue.Dequeue();
                 var vizinhos = entrada.Vizinhos(proximo);
 
-                var pixel = data[proximo.X, proximo.Y, 0];
+                var pixel = data[proximo.Y, proximo.X, 0];
 
                 foreach (var v in vizinhos)
                 {
-                    if (map[v.X, v.Y, Canal] != 255)
+                    if (map[v.Y, v.X, Canal] != 255)
                     {
-                        var diff = Math.Abs(pixel - data[v.X, v.Y, 0]);
+                        var diff = Math.Abs(pixel - data[v.Y, v.X, 0]);
                         if (diff <= Limiar)
                         {
                             queue.Enqueue(v);
-                            map[v.X, v.Y, Canal] = 255;
+                            map[v.Y, v.X, Canal] = 255;
                         }
                     }
                 }
