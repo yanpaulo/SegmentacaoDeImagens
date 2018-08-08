@@ -29,12 +29,12 @@ namespace SegmentacaoDeImagens
         {
             var data = img.Data;
 
-            var input = new Matrix<float>(img.Width * img.Height, 1, 3);
+            var input = new Matrix<float>(img.Rows * img.Cols, 1, 3);
             var output = new Matrix<int>(img.Rows * img.Cols, 1);
 
-            for (int i = 0; i < img.Height; i++)
+            for (int i = 0; i < img.Rows; i++)
             {
-                for (int j = 0; j < img.Width; j++)
+                for (int j = 0; j < img.Cols; j++)
                 {
                     input.Data[i * img.Cols + j, 0] = data[i, j, 0];
                     input.Data[i * img.Cols + j, 1] = data[i, j, 1];
@@ -58,7 +58,7 @@ namespace SegmentacaoDeImagens
             {
                 for (int j = 0; j < img.Cols; j++)
                 {
-                    var point = new PointF(i, j);
+                    var point = new PointF(j, i);
                     var circle = new CircleF(point, 1);
                     saida.Draw(circle, coresSaida[output[i * img.Cols + j, 0]]);
                 }
