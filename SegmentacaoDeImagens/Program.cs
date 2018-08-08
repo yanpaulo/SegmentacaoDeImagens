@@ -29,6 +29,7 @@ namespace SegmentacaoDeImagens
             catch (KeyNotFoundException)
             {
                 Console.WriteLine("Caminho do arquivo nao foi especificado.");
+                MostraAjuda();
             }
             catch (FileNotFoundException ex)
             {
@@ -153,7 +154,27 @@ namespace SegmentacaoDeImagens
 
         static void MostraAjuda()
         {
-            Console.WriteLine("Consulte o codigo (linhas 89 a 113) para verificar as opcoes validas.");
+            Console.WriteLine(
+@"Uso: 
+SegmentacaoDeImagens.exe entrada [-a algoritmo] [opções] [-o saída]
+
+Onde:
+    entrada: Arquivo ou diretório de entrada
+    algoritmo: algoritmo a utilizar, sendo válidos os seguintes:
+        h: Hough, onde as opções são pares no seguinte formato:
+            -d distância mínima(padrão 30)
+            -n raio mínimo(padrão 35)
+            -m raio máximo(padrão 100)
+            -c limiar canny(padrão 100)
+            -u limiar do acumulador do círculo(padrão 100)
+        c: Crescimento, onde as opções são pares no seguinte formato:
+            -p porcentagem inicial(padrão 10)
+            -l limiar(padrão 15)
+        k: K - médias, onde as opções são pares no seguinte formato:
+            -i máximo de iterações(padrão 1000)
+            -e epsilon(padrão 0, 001)
+            -t tentativas(padrão 5)
+");
         }
     }
 }
